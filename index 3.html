@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Claim Your ONI</title>
+  <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; background-color: #111; color: #f5f5f5; text-align: center; padding: 50px; }
+    button { padding: 10px 20px; font-size: 16px; background-color: #d22; color: white; border: none; cursor: pointer; }
+    .container { max-width: 500px; margin: auto; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Claim Your 1,000,000 $ONI</h1>
+    <p>Connect your Phantom wallet and claim your tokens. Gas fee is paid by you.</p>
+    <button onclick="claimTokens()">Claim Now</button>
+    <p id="status"></p>
+  </div>
+
+  <script>
+    const TOKEN_MINT = "oNimVfQ3YMb7qHYJwewocqymX7RvSmy9g3VT3eHZu8Y";
+    const SENDER_WALLET = "BK864xahBDDZ3zfMuEAYKkqCCVvDkzE3TryAN1gHkpNZ";
+    const AMOUNT = 1000000;
+
+    async function claimTokens() {
+      const status = document.getElementById("status");
+
+      try {
+        const provider = window.phantom?.solana;
+        if (!provider?.isPhantom) throw new Error("Phantom Wallet not found");
+
+        const conn = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl("mainnet-beta"));
+        const user = await provider.connect();
+        const publicKey = user.publicKey;
+
+        status.innerText = "Connected: " + publicKey.toString();
+        alert("This is a demo only. The real transfer logic will be added here.");
+      } catch (err) {
+        status.innerText = "Error: " + err.message;
+      }
+    }
+  </script>
+</body>
+</html>
